@@ -1,23 +1,5 @@
 --- configure.orig	2012-11-01 17:14:55.000000000 +0100
 +++ configure	2012-11-01 17:23:44.000000000 +0100
-@@ -88,6 +88,8 @@
-         withcurses=no;;
-     -no-shared-libs|--no-shared-libs)
-         withsharedlibs=no;;
-+    -no-x11|--no-x11)
-+        x11_wanted=no;;
-     -x11include*|--x11include*)
-         x11_include_dir=$2; shift;;
-     -x11lib*|--x11lib*)
-@@ -537,7 +539,7 @@
-       mksharedlib="$flexlink"
-       mkmaindll="$flexlink -maindll"
-       shared_libraries_supported=true;;
--    *-*-linux-gnu|*-*-linux|*-*-freebsd[3-9]*|*-*-openbsd*|*-*-netbsd*|*-*-gnu*)
-+    *-*-linux-gnu|*-*-linux|*-*-freebsd*|*-*-openbsd*|*-*-netbsd*|*-*-gnu*)
-       sharedcccompopts="-fPIC"
-       mksharedlib="$bytecc -shared"
-       bytecclinkopts="$bytecclinkopts -Wl,-E"
 @@ -687,6 +689,7 @@
                                  fi;;
    i[3456]86-*-gnu*)             arch=i386; system=gnu;;

@@ -6,7 +6,7 @@
 #
 
 PORTNAME=	ocaml
-PORTVERSION=	4.00.1
+PORTVERSION=	4.01.0
 CATEGORIES=	lang
 MASTER_SITES=	http://caml.inria.fr/pub/distrib/${DISTNAME:R}/ \
 		${MASTER_SITE_GENTOO}
@@ -17,6 +17,8 @@ EXTRACT_ONLY=	${DISTNAME}${EXTRACT_SUFX}
 
 MAINTAINER=	michipili@gmail.com
 COMMENT=	The Objective Caml compiler and programming environment
+
+NO_STAGE=	yes
 
 .if !defined(NOPORTDOCS)
 DOCSDISTNAME=	${DISTNAME:C/([[:digit:]]+)\.([[:digit:]]+)\.([[:digit:]]+)/\1.\2/}
@@ -98,7 +100,6 @@ CONFLICTS+=	ocaml-[0-9]* ocaml-nox11-[0-9]*
 CONFIGURE_ARGS+=-no-tk
 . else
 USE_TK=		84+
-INVALID_TK_VER =	86
 . if defined(WITH_THREADS)
 USE_TK_THREADS =	yes
 . endif
