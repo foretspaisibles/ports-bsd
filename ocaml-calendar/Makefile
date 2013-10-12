@@ -10,6 +10,8 @@ PKGNAMEPREFIX=	ocaml-
 MAINTAINER=	jaapb@kerguelen.org
 COMMENT=	A date and time library for OCaml
 
+NO_STAGE=	yes
+
 GNU_CONFIGURE=	yes
 USE_GMAKE=	yes
 USE_OCAML=	yes
