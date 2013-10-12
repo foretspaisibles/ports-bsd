@@ -1,0 +1,9 @@
+NOTES — Notes for ports-bsd
+
+1 STRUCTURE OF THE ORIGIN FILE
+
+Each line is a record.  Record fields are separated by a pipe `|'. The
+fields are:
+
+  PORTDIR
+  PORTORIGIN
