@@ -1,11 +1,6 @@
 --- src/tiffread.c.orig	2009-10-26 13:42:03.000000000 +0100
 +++ src/tiffread.c	2010-08-28 10:47:42.000000000 +0200
-@@ -20,15 +20,21 @@
- #include <caml/alloc.h>
- #include <caml/memory.h>
- #include <caml/fail.h>
-+#include "oversized.h"
- 
+@@ -24,11 +25,16 @@
  /* These are defined in caml/config.h */
  #define int16 int16tiff
  #define uint16 uint16tiff
