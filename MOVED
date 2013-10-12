@@ -1,0 +1,37 @@
+#
+# MOVED -- A list of (recently) moved or removed ports
+#
+# Each entry consists of a single line containing the following four
+# fields in the order named, separated with the pipe (`|') character:
+#
+#     Port:	A port that was moved (category/portname)
+#     Moved to:	Where the port was moved to, or which port users can
+#		and should migrate to (category/portname); no entry
+#		indicates that the port was deleted
+#     Date:	When the moving or the removal was done (YYYY-MM-DD,
+#		in PST/PDT)
+#     Why:	The reason why the port was moved or removed
+#
+# Keep this list sorted in the chronological order.  New entries must be
+# added at the tail.  Reason for (re)move should start with a capital letter
+# (unless it's a file or other special name) and not end with the dot.
+#
+# If previously removed port gets restored, make sure to delete the relevant
+# line.  If a port is copied to a new location and the old location is kept
+# (e.g. upgraded to a later version), don't record it here.
+#
+# Port|Moved to|Date|Why
+lang/ocaml|michael/ocaml|2013-11-12|Maintainership
+lang/tuareg-mode.el|michael/tuareg-mode.el|2013-11-12|Maintainership
+math/ocamlgsl|michael/ocamlgsl|2013-11-12|Maintainership
+devel/ocaml-calendar|michael/ocaml-calendar|2013-11-12|Maintainership
+devel/ocaml-camomile|michael/ocaml-camomile|2013-11-12|Maintainership
+devel/ocaml-cppo|michael/ocaml-cppo|2013-11-12|Maintainership
+security/ocaml-cryptokit|michael/ocaml-cryptokit|2013-11-12|Maintainership
+devel/ocaml-event|michael/ocaml-event|2013-11-12|Maintainership
+textproc/ocaml-expat|michael/ocaml-expat|2013-11-12|Maintainership
+graphics/ocaml-images|michael/ocaml-images|2013-11-12|Maintainership
+lang/ocaml-mode.el|michael/ocaml-mode.el|2013-11-12|Maintainership
+www/ocaml-net|michael/ocaml-net|2013-11-12|Maintainership
+lang/ocaml-nox11|michael/ocaml-nox11|2013-11-12|Maintainership
+lang/caml-light|michael/caml-light|2013-11-12|Maintainership
