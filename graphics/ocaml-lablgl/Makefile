@@ -1,9 +1,9 @@
 # Created by: Ronald Kuehn <rk@ronald.org>
-# $FreeBSD: head/graphics/ocaml-lablgl/Makefile 367888 2014-09-10 20:50:31Z gerald $
+# $FreeBSD$
 
 PORTNAME=	lablgl
-PORTVERSION=	20120306
-PORTREVISION=	3
+PORTVERSION=	1.05
+PORTREVISION=	1
 CATEGORIES=	graphics
 MASTER_SITES=	https://forge.ocamlcore.org/frs/download.php/816/
 PKGNAMEPREFIX=	ocaml-
