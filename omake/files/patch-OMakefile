@@ -13,7 +13,7 @@
  # OCaml options
  #
 -OCAMLFLAGS[] += -w Ae$(if $(OCAML_ACCEPTS_Z_WARNING), z)
-+OCAMLFLAGS[] += -w Aer-29$(if $(OCAML_ACCEPTS_Z_WARNING), z)
++OCAMLFLAGS[] += -w -A
  if $(THREADS_ENABLED)
      OCAMLFLAGS += -thread
      export
