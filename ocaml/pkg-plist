@@ -1091,43 +1091,6 @@ lib/ocaml/weak.cmx
 lib/ocaml/weak.ml
 lib/ocaml/weak.mli
 %%PROF%%lib/ocaml/weak.p.cmx
-%%TK%%%%EXAMPLESDIR%%/examples_camltk/.ignore
-%%TK%%%%EXAMPLESDIR%%/examples_camltk/Makefile
-%%TK%%%%EXAMPLESDIR%%/examples_camltk/Makefile.nt
-%%TK%%%%EXAMPLESDIR%%/examples_camltk/addition.ml
-%%TK%%%%EXAMPLESDIR%%/examples_camltk/eyes.ml
-%%TK%%%%EXAMPLESDIR%%/examples_camltk/fileinput.ml
-%%TK%%%%EXAMPLESDIR%%/examples_camltk/fileopen.ml
-%%TK%%%%EXAMPLESDIR%%/examples_camltk/helloworld.ml
-%%TK%%%%EXAMPLESDIR%%/examples_camltk/images/CamlBook.gif
-%%TK%%%%EXAMPLESDIR%%/examples_camltk/images/Lambda2.back.gif
-%%TK%%%%EXAMPLESDIR%%/examples_camltk/images/dojoji.back.gif
-%%TK%%%%EXAMPLESDIR%%/examples_camltk/jptest.ml
-%%TK%%%%EXAMPLESDIR%%/examples_camltk/mytext.ml
-%%TK%%%%EXAMPLESDIR%%/examples_camltk/socketinput.ml
-%%TK%%%%EXAMPLESDIR%%/examples_camltk/taddition.ml
-%%TK%%%%EXAMPLESDIR%%/examples_camltk/taquin.ml
-%%TK%%%%EXAMPLESDIR%%/examples_camltk/tetris.ml
-%%TK%%%%EXAMPLESDIR%%/examples_camltk/text.ml
-%%TK%%%%EXAMPLESDIR%%/examples_camltk/winskel.ml
-%%EXAMPLESDIR%%/examples_labltk/.ignore
-%%EXAMPLESDIR%%/examples_labltk/Lambda2.back.gif
-%%EXAMPLESDIR%%/examples_labltk/Makefile
-%%EXAMPLESDIR%%/examples_labltk/Makefile.nt
-%%EXAMPLESDIR%%/examples_labltk/README
-%%EXAMPLESDIR%%/examples_labltk/calc.ml
-%%EXAMPLESDIR%%/examples_labltk/clock.ml
-%%EXAMPLESDIR%%/examples_labltk/demo.ml
-%%EXAMPLESDIR%%/examples_labltk/eyes.ml
-%%EXAMPLESDIR%%/examples_labltk/hello.ml
-%%EXAMPLESDIR%%/examples_labltk/hello.tcl
-%%EXAMPLESDIR%%/examples_labltk/lang.ml
-%%EXAMPLESDIR%%/examples_labltk/taquin.ml
-%%EXAMPLESDIR%%/examples_labltk/tetris.ml
-@dirrm %%EXAMPLESDIR%%/examples_labltk
-@dirrm %%EXAMPLESDIR%%/examples_camltk/images
-@dirrm %%EXAMPLESDIR%%/examples_camltk
-@dirrm %%EXAMPLESDIR%%
 @dirrm lib/ocaml/vmthreads
 @dirrm lib/ocaml/threads
 @dirrm lib/ocaml/stublibs

@@ -1,16 +1,12 @@
-# New ports collection makefile for:	ocaml
-# Date created:		24 December 1996
-# Whom:			Kiriyama Kazuhiko <kiri@kiri.toba-cmt.ac.jp>
-#
-# $FreeBSD: ports/lang/ocaml/Makefile,v 1.77 2012/02/23 01:10:28 bf Exp $
-#
+# Created by: Kiriyama Kazuhiko <kiri@kiri.toba-cmt.ac.jp>
+# $FreeBSD$
 
 PORTNAME=	ocaml
 PORTVERSION=	4.01.0
 CATEGORIES=	lang
 MASTER_SITES=	http://caml.inria.fr/pub/distrib/${DISTNAME:R}/ \
 		${MASTER_SITE_GENTOO}
-MASTER_SITE_SUBDIR=distfiles
+MASTER_SITE_SUBDIR=	distfiles
 PKGNAMESUFFIX=	${SFX}
 DISTFILES=	${DISTNAME}${EXTRACT_SUFX}
 EXTRACT_ONLY=	${DISTNAME}${EXTRACT_SUFX}
@@ -18,57 +14,62 @@ EXTRACT_ONLY=	${DISTNAME}${EXTRACT_SUFX}
 MAINTAINER=	michipili@gmail.com
 COMMENT=	The Objective Caml compiler and programming environment
 
-NO_STAGE=	yes
-
-.if !defined(NOPORTDOCS)
-DOCSDISTNAME=	${DISTNAME:C/([[:digit:]]+)\.([[:digit:]]+)\.([[:digit:]]+)/\1.\2/}
-DISTFILES+=	${DOCSDISTNAME}-refman-html.tar.gz \
-		${DOCSDISTNAME}-refman.ps.gz \
-		${DOCSDISTNAME}-refman.pdf
-.endif
+LICENSE=		QPL10 LGPL20
+LICENSE_COMB=		multi
+LICENSE_NAME_QPL10=	Q Public License, Version 1.0
+LICENSE_FILE_QPL10=	${WRKSRC}/LICENSE
+LICENSE_PERMS_QPL10=	auto-accept
 
 USE_BZIP2=	yes
 REINPLACE_ARGS=	-i ""
 HAS_CONFIGURE=	yes
 ALL_TARGET=	world.opt
 STRIP=
-MAKE_JOBS_UNSAFE=yes
+SSP_UNSAFE=	yes
+MAKE_JOBS_UNSAFE=	yes
 
 CONFIGURE_ARGS=	-verbose -prefix "${PREFIX}" \
 		-cc "${CC} ${CFLAGS}" \
 		-as "${AS} ${ASFLAGS}" \
 		-aspp "${CC} -c" \
 		-partialld "${LD} -r"
-OPTIONS=	X11	"Build with X11 support" on \
-		TK	"Build LablTk library (requires X11 support)" on \
-		THREADS	"Build with Posix threads support" on \
-		OPT_DEF	"Use system-optimized binaries by default" off
+OPTIONS_DEFINE=	OPT_DEF THREADS TK X11
+OPTIONS_DEFAULT=	THREADS TK X11
+OPT_DEF_DESC=	Use system-optimized binaries by default
+TK_DESC=	LablTk library (requires X11 support)
 
 MODOPT=		camlp4o camlp4r ocamlc ocamldep ocamldoc ocamllex ocamlopt
 PATTERN=	[[:space:]]*(do|then)?[[:space:]]*)(\$$\(CP\)|cp)([[:space:]]
 
-.include <bsd.port.pre.mk>
+CONFLICTS=	metaocaml-[0-9]*
 
-.if ${ARCH} == powerpc
+NO_STAGE=	yes
+.include <bsd.port.options.mk>
+
+.if ${ARCH:Mpowerpc*}
 ARCH=	power
-.endif
-
-.if ${ARCH} == power
 PLIST_SUB+=	PROF="@comment "
 .else
 PLIST_SUB+=	PROF=""
 .endif
 
-.include "${FILESDIR}/manfiles"
+.if ${ARCH} == sparc64
+BROKEN=	ocamlc.opt seg-faults on ${ARCH}, please try to fix
+.endif
 
-.if !defined(NOPORTDOCS)
+.if ${PORT_OPTIONS:MDOCS}
+DOCSDISTNAME=	${DISTNAME:C/([[:digit:]]+)\.([[:digit:]]+)\.([[:digit:]]+)/\1.\2/}
+DISTFILES+=	${DOCSDISTNAME}-refman-html.tar.gz \
+		${DOCSDISTNAME}-refman.ps.gz \
+		${DOCSDISTNAME}-refman.pdf
+EXTRACT_ONLY+=	${DOCSDISTNAME}-refman-html.tar.gz
 PLIST_SUB+=	DOC=""
-PORTDOCS =	htmlman ${DOCSDISTNAME}-refman.ps.gz ${DOCSDISTNAME}-refman.pdf
+PORTDOCS=	htmlman ${DOCSDISTNAME}-refman.ps.gz ${DOCSDISTNAME}-refman.pdf
 .else
 PLIST_SUB+=	DOC="@comment "
 .endif
 
-.if !defined(WITHOUT_THREADS)
+.if ${PORT_OPTIONS:MTHREADS}
 PLIST_SUB+=	THREADS=""
 THR_CPP=	${PTHREAD_CFLAGS}
 THR_LD=		${PTHREAD_LIBS}
@@ -79,54 +80,42 @@ THR_LD=		#empty
 CONFIGURE_ARGS+=-no-pthread
 .endif
 
-.if !defined(WITHOUT_X11)
+.if ${PORT_OPTIONS:MX11}
 PLIST_SUB+=	X11=""
 USE_XORG=	x11
+CONFLICTS+=	ocaml-nox11-[0-9]*
 CONFIGURE_ARGS+=-x11include ${LOCALBASE}/include -x11lib ${LOCALBASE}/lib
 .else
 PLIST_SUB+=	X11="@comment "
-WITHOUT_TK=	yes
 SFX=		-nox11
-CONFLICTS+=	ocaml-[0-9]* ocaml-notk-[0-9]*
-CONFIGURE_ARGS+=-no-x11
+CONFLICTS+=	ocaml-[0-9]*
+CONFIGURE_ARGS+=-no-graph
 .endif
 
-.if defined(WITHOUT_TK)
-PLIST_SUB+=	TK="@comment "
-. if !defined(WITHOUT_X11)
-SFX=		-notk
-CONFLICTS+=	ocaml-[0-9]* ocaml-nox11-[0-9]*
+.if ${PORT_OPTIONS:MTK}
+. if ${PORT_OPTIONS:MEXAMPLES}
+PORTEXAMPLES=	examples_camltk examples_labltk
+.endif
+. if ! ${PORT_OPTIONS:MX11}
+IGNORE=	: TK support requires X11 support
 . endif
-CONFIGURE_ARGS+=-no-tk
-. else
-USE_TK=		84+
-. if defined(WITH_THREADS)
-USE_TK_THREADS =	yes
-. endif
-.include "${PORTSDIR}/Mk/bsd.tcl.mk"
+USES+=		tk:84+
 PLIST_SUB+=	TK=""
-CONFLICTS+=	ocaml-nox11-[0-9]* ocaml-notk-[0-9]*
 CONFIGURE_ARGS+=	-tkdefs \
 			"-I${TCL_INCLUDEDIR} -I${TK_INCLUDEDIR} ${THR_CPP}" \
-			-tklibs "-L${LOCALBASE}/lib -ltk${TK_VER:S|.||}${_TCL_THREADS_SUFFIX} \
-			-ltcl${TCL_VER:S|.||}${_TCL_THREADS_SUFFIX} ${THR_LD}"
+			-tklibs "-L${LOCALBASE}/lib -ltk${TK_VER:S|.||} \
+			-ltcl${TCL_VER:S|.||} ${THR_LD}"
+.else
+PLIST_SUB+=	TK="@comment "
+CONFIGURE_ARGS+=-no-tk
 .endif
 
-.if ${ARCH} == sparc64
-BROKEN=	ocamlc.opt seg-faults on ${ARCH}, please try to fix
-.endif
+.include <bsd.port.pre.mk>
+.include "${FILESDIR}/manfiles"
 
 post-extract:
 .if ${ARCH} == power
 	${MV} ${WRKSRC}/asmrun/power-elf.S ${WRKSRC}/asmrun/power-bsd.S
-.endif
-.if !defined(NOPORTDOCS)
-	@if ! (cd ${WRKDIR} && \
-	  ${TAR} xf ${_DISTDIR}${DOCSDISTNAME}-refman-html.tar.gz \
-	) \
-	then \
-	  exit 1; \
-	fi;
 .endif
 
 post-patch:
@@ -142,7 +131,7 @@ post-patch:
 	@${REINPLACE_CMD} -e 's|gcc|$$(CC)|' \
 		${WRKSRC}/*/Makefile \
 		${WRKSRC}/*/*/Makefile
-.if defined(WITH_TK)
+.if ${PORT_OPTIONS:MTK}
 	@${REINPLACE_CMD} -e 's|/usr/bin/wish|${WISH}|' \
 		${WRKSRC}/otherlibs/labltk/examples_labltk/hello.tcl
 .endif
@@ -167,22 +156,21 @@ post-configure:
 
 check test: install
 	@cd ${WRKSRC}/testsuite; ${RM} -f _log; for d in tests/* ; do \
-	${SETENV} ${MAKE_ENV} ${MAKE} ${_MAKE_JOBS} ${MAKE_ARGS} one DIR=$${d} \
+	${SETENV} ${MAKE_ENV} ${MAKE_CMD} ${MAKE_ARGS} one DIR=$${d} \
 	2>&1 | tee -a _log || ${TRUE} ; done ; \
-	${SETENV} ${MAKE_ENV} ${MAKE} ${_MAKE_JOBS} ${MAKE_ARGS} report
+	${SETENV} ${MAKE_ENV} ${MAKE_CMD} ${MAKE_ARGS} report
 
 post-install:
 	@${TOUCH} ${PREFIX}/lib/ocaml/ocamldoc/custom/.keep
-.if !defined(WITHOUT_TK)
+.if ${PORT_OPTIONS:MTK} && ${PORT_OPTIONS:MEXAMPLES}
 	@${MKDIR} ${EXAMPLESDIR}
 	@(cd ${WRKSRC}/otherlibs/labltk && \
 		${COPYTREE_SHARE} examples_labltk ${EXAMPLESDIR} \
-		"! -name .cvsignore" && \
+		"! -name .ignore" && \
 		${COPYTREE_SHARE} examples_camltk ${EXAMPLESDIR} \
-		"! -name .cvsignore")
+		"! -name .ignore")
 .endif
-
-.if !defined(NOPORTDOCS)
+.if ${PORT_OPTIONS:MDOCS}
 	${MKDIR} ${DOCSDIR}
 	(cd ${WRKDIR} && ${COPYTREE_SHARE} htmlman ${DOCSDIR})
 	${INSTALL_DATA} ${_DISTDIR}${DOCSDISTNAME}-refman.ps.gz ${DOCSDIR}
@@ -199,7 +187,7 @@ post-install:
 	@${CHMOD} 644 ${PREFIX}/lib/ocaml/ld.conf
 
 # Do we want .opt version of tools to be the default ?
-.if defined(WITH_OPT_DEF)
+.if ${PORT_OPTIONS:MOPT_DEF}
 . for module in ${MODOPT}
 #	First, we save bytecode version
 	@${MV} ${PREFIX}/bin/${module} ${PREFIX}/bin/${module}.byte
