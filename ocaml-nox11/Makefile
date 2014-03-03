@@ -1,19 +1,8 @@
 # Created by: Eugene Ossintsev
-# $FreeBSD: head/lang/ocaml-nox11/Makefile 340722 2014-01-22 17:00:46Z mat $
-
-PORTNAME=	ocaml-nox11
-CATEGORIES=	lang
-
-MAINTAINER=	michael.grunewald@laposte.net
-COMMENT=	Objective Caml compiler and programming environment (no X11)
+# $FreeBSD$
 
 MASTERDIR=	${.CURDIR}/../ocaml
 
-CONFLICTS=	metaocaml-[0-9]* ocaml-[0-9]* ocaml-notk-[0-9]*
+OPTIONS_EXCLUDE=	TK X11
 
-OPTIONS_EXCLUDE=TK X11
-
-SFX=		-nox11
-
-NO_STAGE=	yes
 .include "${MASTERDIR}/Makefile"
