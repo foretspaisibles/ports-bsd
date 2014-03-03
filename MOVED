@@ -35,3 +35,4 @@ lang/ocaml-mode.el|michael/ocaml-mode.el|2013-11-12|Maintainership
 www/ocaml-net|michael/ocaml-net|2013-11-12|Maintainership
 lang/ocaml-nox11|michael/ocaml-nox11|2013-11-12|Maintainership
 lang/caml-light|michael/caml-light|2013-11-12|Maintainership
+devel/omake|michael/omake|2013-11-12|Fix
