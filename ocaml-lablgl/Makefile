@@ -2,14 +2,13 @@
 # $FreeBSD: head/graphics/ocaml-lablgl/Makefile 345111 2014-02-19 16:31:03Z gahr $
 
 PORTNAME=	lablgl
-PORTVERSION=	20120306
+PORTVERSION=	1.05
 PORTREVISION=	1
 CATEGORIES=	graphics
-MASTER_SITES=	http://wwwfun.kurims.kyoto-u.ac.jp/soft/lsl/dist/ \
-		https://forge.ocamlcore.org/frs/download.php/816/
+MASTER_SITES=	https://forge.ocamlcore.org/frs/download.php/816/
 PKGNAMEPREFIX=	ocaml-
 
-MAINTAINER=	bf@FreeBSD.org
+MAINTAINER=	michipili@gmail.com
 COMMENT=	OpenGL interface for Objective Caml
 
 LICENSE=	BSD3CLAUSE
