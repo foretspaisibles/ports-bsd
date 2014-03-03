@@ -15,5 +15,6 @@
     SUBDIR += ocaml-mode.el
     SUBDIR += ocaml-net
     SUBDIR += ocaml-nox11
+    SUBDIR += ocaml-lablgl
 
 .include <bsd.port.subdir.mk>

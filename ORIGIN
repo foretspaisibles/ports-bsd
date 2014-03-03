@@ -12,3 +12,4 @@ ocaml-mode.el|lang/ocaml-mode.el
 ocaml-net|www/ocaml-net
 ocaml-nox11|lang/ocaml-nox11
 caml-light|lang/caml-light
+ocaml-lablgl|graphics/ocaml-lablgl
