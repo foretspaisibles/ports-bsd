@@ -84,4 +84,16 @@ port_vendordrop_iter()
     IFS="$saved_ifs"
 }
 
-port_vendordrop_iter < ORIGIN
+port_vendordrop_select()
+{
+    if [ $# -gt 0 ]; then
+	awk -F'|' -v OFS='|' -v port="$1" '$1 == port {print}'
+    else
+	cat
+    fi
+}
+
+(
+    port_vendordrop_select "$@" \
+	| port_vendordrop_iter
+) < ORIGIN

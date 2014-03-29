@@ -1,15 +1,16 @@
 # Created by: Kiriyama Kazuhiko <kiri@kiri.toba-cmt.ac.jp>
-# $FreeBSD$
+# $FreeBSD: head/lang/ocaml/Makefile 349300 2014-03-26 21:58:06Z marino $
 
 PORTNAME=	ocaml
-PORTVERSION=	4.01.0
+PORTVERSION=	4.00.1
+PORTREVISION=	1
 CATEGORIES=	lang
-MASTER_SITES=	http://caml.inria.fr/pub/distrib/${DISTNAME:R}/ \
+MASTER_SITES=	http://caml.inria.fr/distrib/${DISTNAME:R}/ \
 		${MASTER_SITE_GENTOO}
 MASTER_SITE_SUBDIR=	distfiles
 PKGNAMESUFFIX=	${SFX}
 DISTFILES=	${DISTNAME}${EXTRACT_SUFX}
-EXTRACT_ONLY=	${DISTNAME}${EXTRACT_SUFX}
+EXTRACT_ONLY=   ${DISTNAME}${EXTRACT_SUFX}
 
 MAINTAINER=	michipili@gmail.com
 COMMENT=	The Objective Caml compiler and programming environment
@@ -20,7 +21,7 @@ LICENSE_NAME_QPL10=	Q Public License, Version 1.0
 LICENSE_FILE_QPL10=	${WRKSRC}/LICENSE
 LICENSE_PERMS_QPL10=	auto-accept
 
-USE_BZIP2=	yes
+USES=		gmake tar:bzip2
 REINPLACE_ARGS=	-i ""
 HAS_CONFIGURE=	yes
 ALL_TARGET=	world.opt
@@ -33,40 +34,26 @@ CONFIGURE_ARGS=	-verbose -prefix "${PREFIX}" \
 		-as "${AS} ${ASFLAGS}" \
 		-aspp "${CC} -c" \
 		-partialld "${LD} -r"
-OPTIONS_DEFINE=	OPT_DEF THREADS TK X11
-OPTIONS_DEFAULT=	THREADS TK X11
-OPT_DEF_DESC=	Use system-optimized binaries by default
+
+OPTIONS_DEFINE= X11 TK THREADS OPT_DEF DOCS
+OPTIONS_DEFAULT=X11 TK THREADS
 TK_DESC=	LablTk library (requires X11 support)
+CMP_LIB_DESC=	Install compiler libraries
+OPT_DEF_DESC=	Use system-optimizes binaries by default
+PORTDOCS=	htmlman ${DOCSDISTNAME}-refman.ps.gz \
+		${DOCSDISTNAME}-refman.pdf
 
 MODOPT=		camlp4o camlp4r ocamlc ocamldep ocamldoc ocamllex ocamlopt
 PATTERN=	[[:space:]]*(do|then)?[[:space:]]*)(\$$\(CP\)|cp)([[:space:]]
-
-CONFLICTS=	metaocaml-[0-9]*
+DOCSDISTNAME=   ${DISTNAME:C/([[:digit:]]+)\.([[:digit:]]+)\.([[:digit:]]+)/\1.\2/}
 
 NO_STAGE=	yes
 .include <bsd.port.options.mk>
 
-.if ${ARCH:Mpowerpc*}
-ARCH=	power
-PLIST_SUB+=	PROF="@comment "
-.else
-PLIST_SUB+=	PROF=""
-.endif
-
-.if ${ARCH} == sparc64
-BROKEN=	ocamlc.opt seg-faults on ${ARCH}, please try to fix
-.endif
-
 .if ${PORT_OPTIONS:MDOCS}
-DOCSDISTNAME=	${DISTNAME:C/([[:digit:]]+)\.([[:digit:]]+)\.([[:digit:]]+)/\1.\2/}
-DISTFILES+=	${DOCSDISTNAME}-refman-html.tar.gz \
+DISTFILES+= 	${DOCSDISTNAME}-refman-html.tar.gz \
 		${DOCSDISTNAME}-refman.ps.gz \
 		${DOCSDISTNAME}-refman.pdf
-EXTRACT_ONLY+=	${DOCSDISTNAME}-refman-html.tar.gz
-PLIST_SUB+=	DOC=""
-PORTDOCS=	htmlman ${DOCSDISTNAME}-refman.ps.gz ${DOCSDISTNAME}-refman.pdf
-.else
-PLIST_SUB+=	DOC="@comment "
 .endif
 
 .if ${PORT_OPTIONS:MTHREADS}
@@ -113,9 +100,25 @@ CONFIGURE_ARGS+=-no-tk
 .include <bsd.port.pre.mk>
 .include "${FILESDIR}/manfiles"
 
+OCAML_ARCH= ${ARCH:S/x86_64/amd64/:S/powerpc/power/}
+
+.if ${OCAML_ARCH} == power
+PLIST_SUB+=	PROF="@comment "
+.else
+PLIST_SUB+=	PROF=""
+.endif
+
 post-extract:
-.if ${ARCH} == power
+.if ${OCAML_ARCH} == power
 	${MV} ${WRKSRC}/asmrun/power-elf.S ${WRKSRC}/asmrun/power-bsd.S
+.endif
+.if ${PORT_OPTIONS:MDOCS}
+	@if ! (cd ${WRKDIR} && \
+	  ${TAR} xf ${_DISTDIR}${DOCSDISTNAME}-refman-html.tar.gz \
+	) \
+	then \
+	  exit 1; \
+	fi;
 .endif
 
 post-patch:
@@ -148,7 +151,7 @@ post-configure:
 # user's umask(1)
 	@${FIND} ${WRKDIR} -type f -name Makefile -print0 | \
 		${XARGS} -0 -n 5 -x ${REINPLACE_CMD} -E \
-		-e 's,\$$\(ARCH\),${ARCH:sparc64=sparc},g'	\
+		-e 's,\$$\(ARCH\),${OCAML_ARCH},g' \
 		-e 's,^(${PATTERN}+.*INSTALLDIR),\1\$${BSD_INSTALL_DATA} \4,' \
 		-e 's,^(${PATTERN}+.*BINDIR),\1\$${BSD_INSTALL_PROGRAM} \4,' \
 		-e 's,^(${PATTERN}+.*LIBDIR),\1\$${BSD_INSTALL_DATA} \4,' \
@@ -162,7 +165,8 @@ check test: install
 
 post-install:
 	@${TOUCH} ${PREFIX}/lib/ocaml/ocamldoc/custom/.keep
-.if ${PORT_OPTIONS:MTK} && ${PORT_OPTIONS:MEXAMPLES}
+	@${CHMOD} 755 ${PREFIX}/lib/ocaml/expunge
+.if ${PORT_OPTIONS:MTK}
 	@${MKDIR} ${EXAMPLESDIR}
 	@(cd ${WRKSRC}/otherlibs/labltk && \
 		${COPYTREE_SHARE} examples_labltk ${EXAMPLESDIR} \
@@ -170,6 +174,13 @@ post-install:
 		${COPYTREE_SHARE} examples_camltk ${EXAMPLESDIR} \
 		"! -name .ignore")
 .endif
+.if ${PORT_OPTIONS:MDOCS}
+	${MKDIR} ${DOCSDIR}
+	(cd ${WRKDIR} && ${COPYTREE_SHARE} htmlman ${DOCSDIR})
+	${INSTALL_DATA} ${_DISTDIR}${DOCSDISTNAME}-refman.ps.gz ${DOCSDIR}
+	${INSTALL_DATA} ${_DISTDIR}${DOCSDISTNAME}-refman.pdf ${DOCSDIR}
+.endif
+
 .if ${PORT_OPTIONS:MDOCS}
 	${MKDIR} ${DOCSDIR}
 	(cd ${WRKDIR} && ${COPYTREE_SHARE} htmlman ${DOCSDIR})

@@ -1,5 +1,5 @@
 # Created by: Jaap Boender <jaapb@kerguelen.org>
-# $FreeBSD: head/devel/ocaml-calendar/Makefile 327724 2013-09-20 17:13:42Z bapt $
+# $FreeBSD: head/devel/ocaml-calendar/Makefile 349292 2014-03-26 20:46:03Z antoine $
 
 PORTNAME=	calendar
 PORTVERSION=	2.03.2
@@ -13,13 +13,9 @@ COMMENT=	A date and time library for OCaml
 NO_STAGE=	yes
 
 GNU_CONFIGURE=	yes
-USE_GMAKE=	yes
+USES=		gmake
 USE_OCAML=	yes
 USE_OCAML_FINDLIB=	yes
-
-NO_STAGE=	yes
-post-install:
-	@${FIND} ${OCAMLFIND_DESTDIR}/${PORTNAME} -type f | \
-		${SED} "s,^${PREFIX}/,," >> ${TMPPLIST}
+USE_OCAMLFIND_PLIST=	yes
 
 .include <bsd.port.mk>
