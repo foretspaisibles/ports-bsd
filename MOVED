@@ -21,18 +21,18 @@
 # (e.g. upgraded to a later version), don't record it here.
 #
 # Port|Moved to|Date|Why
-lang/ocaml|michael/ocaml|2013-11-12|Maintainership
-lang/tuareg-mode.el|michael/tuareg-mode.el|2013-11-12|Maintainership
-math/ocamlgsl|michael/ocamlgsl|2013-11-12|Maintainership
-devel/ocaml-calendar|michael/ocaml-calendar|2013-11-12|Maintainership
-devel/ocaml-camomile|michael/ocaml-camomile|2013-11-12|Maintainership
-devel/ocaml-cppo|michael/ocaml-cppo|2013-11-12|Maintainership
-security/ocaml-cryptokit|michael/ocaml-cryptokit|2013-11-12|Maintainership
-devel/ocaml-event|michael/ocaml-event|2013-11-12|Maintainership
-textproc/ocaml-expat|michael/ocaml-expat|2013-11-12|Maintainership
-graphics/ocaml-images|michael/ocaml-images|2013-11-12|Maintainership
-lang/ocaml-mode.el|michael/ocaml-mode.el|2013-11-12|Maintainership
-www/ocaml-net|michael/ocaml-net|2013-11-12|Maintainership
-lang/ocaml-nox11|michael/ocaml-nox11|2013-11-12|Maintainership
-lang/caml-light|michael/caml-light|2013-11-12|Maintainership
-devel/omake|michael/omake|2013-11-12|Fix
+lang/ocaml|michael/lang/ocaml|2013-11-12|Maintainership
+lang/tuareg-mode.el|michael/lang/tuareg-mode.el|2013-11-12|Maintainership
+math/ocamlgsl|michael/math/ocamlgsl|2013-11-12|Maintainership
+devel/ocaml-calendar|michael/devel/ocaml-calendar|2013-11-12|Maintainership
+devel/ocaml-camomile|michael/devel/ocaml-camomile|2013-11-12|Maintainership
+devel/ocaml-cppo|michael/devel/ocaml-cppo|2013-11-12|Maintainership
+security/ocaml-cryptokit|michael/security/ocaml-cryptokit|2013-11-12|Maintainership
+devel/ocaml-event|michael/devel/ocaml-event|2013-11-12|Maintainership
+textproc/ocaml-expat|michael/textproc/ocaml-expat|2013-11-12|Maintainership
+graphics/ocaml-images|michael/graphics/ocaml-images|2013-11-12|Maintainership
+lang/ocaml-mode.el|michael/lang/ocaml-mode.el|2013-11-12|Maintainership
+www/ocaml-net|michael/www/ocaml-net|2013-11-12|Maintainership
+lang/ocaml-nox11|michael/lang/ocaml-nox11|2013-11-12|Maintainership
+lang/caml-light|michael/lang/caml-light|2013-11-12|Maintainership
+devel/omake|michael/devel/omake|2013-11-12|Fix
