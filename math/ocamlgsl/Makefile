@@ -1,31 +1,34 @@
-# Created by: Klaus T. Aehlig <aehlig@linta.de>
-# $FreeBSD: head/math/ocamlgsl/Makefile 336358 2013-12-13 15:35:19Z bapt $
+# Ports collection makefile for:	ocamlgsl
+# Date created:				2011/04/10
+# Whom:					Klaus T. Aehlig <aehlig@linta.de>
+#
+# $FreeBSD: ports/math/ocamlgsl/Makefile,v 1.2 2012/08/23 16:24:09 skreuzer Exp $
+#
 
-PORTNAME=	ocamlgsl
-PORTVERSION=	0.6.0
-PORTREVISION=	1
+PORTNAME=	ocaml-gsl
+PORTVERSION=	1.13.0
 CATEGORIES=	math
-MASTER_SITES=	http://oandrieu.nerim.net/ocaml/gsl/
+MASTER_SITES=	https://bitbucket.org/mmottl/gsl-ocaml/downloads/
 
-MAINTAINER=	aehlig@linta.de
+DISTFILES=	gsl-ocaml-${PORTVERSION}${EXTRACT_SUFX}
+WRKSRC=		${WRKDIR}/gsl-ocaml-${PORTVERSION}
+
+MAINTAINER=	michipili@gmail.com
 COMMENT=	An interface to GSL for the Objective Caml language
+
+NO_STAGE=yes
 
 LIB_DEPENDS=	gsl:${PORTSDIR}/math/gsl
 BUILD_DEPENDS=	gawk:${PORTSDIR}/lang/gawk \
 		${OCAMLC_DEPEND}
 RUN_DEPENDS=	ocamlfind:${PORTSDIR}/devel/ocaml-findlib
 
-LICENSE=	GPLv2
-LICENSE_FILE=	${WRKSRC}/COPYING
+LICENSE=	GPLv3
+LICENSE_FILE=	${WRKSRC}/COPYING.txt
 
-INSTALL_TARGET=	install-findlib
-
-USES=		gmake
+USE_GMAKE=	YES
+USE_GCC=	4.2+
 USE_OCAML=	YES
 MAKE_ENV+=	OCAMLDIR=${OCAML_LIBDIR}
-MAKE_JOBS_UNSAFE=	yes
-NO_OCAML_BUILDDEPENDS=	yes
-USE_OCAML_LDCONFIG=	yes
 
-NO_STAGE=	yes
 .include <bsd.port.mk>
