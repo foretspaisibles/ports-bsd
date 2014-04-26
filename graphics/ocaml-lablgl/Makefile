@@ -5,7 +5,7 @@ PORTNAME=	lablgl
 PORTVERSION=	1.05
 PORTREVISION=	1
 CATEGORIES=	graphics
-MASTER_SITES=	https://forge.ocamlcore.org/frs/download.php/816/
+MASTER_SITES=	http://forge.ocamlcore.org/frs/download.php/816/
 PKGNAMEPREFIX=	ocaml-
 
 MAINTAINER=	michipili@gmail.com
