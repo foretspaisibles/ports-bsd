@@ -1,12 +1,6 @@
---- src/tiffread.c.orig	2011-06-22 20:04:32.000000000 +0200
-+++ src/tiffread.c
-@@ -23,14 +23,22 @@
- 
- #include "oversized.h"
- 
-+/* Avoid redefinitions */
-+#undef int16
-+#undef uint16
+--- src/tiffread.c.orig	2009-10-26 13:42:03.000000000 +0100
++++ src/tiffread.c	2010-08-28 10:47:42.000000000 +0200
+@@ -24,11 +25,16 @@
  /* These are defined in caml/config.h */
  #define int16 int16tiff
  #define uint16 uint16tiff
@@ -23,9 +17,9 @@
  extern value *imglib_error;
  
  value open_tiff_file_for_read( name )
-@@ -70,6 +78,10 @@
-       failwith_oversized("tiff");
-     }
+@@ -64,6 +70,10 @@
+     TIFFGetField(tif, TIFFTAG_YRESOLUTION, &yres);
+     TIFFGetField(tif, TIFFTAG_PHOTOMETRIC, &photometric);
  
 +    if (oversized (imagewidth, imagelength)) {
 +	failwith_oversized("tiff");

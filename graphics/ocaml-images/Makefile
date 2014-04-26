@@ -1,14 +1,18 @@
-# Created by: ijliao
-# $FreeBSD: head/graphics/ocaml-images/Makefile 349275 2014-03-26 17:54:08Z marino $
+# ex:ts=8
+# Ports collection makefile for:	ocaml-images
+# Date created:			Feb 7, 2003
+# Whom:				ijliao
+#
+# $FreeBSD: ports/graphics/ocaml-images/Makefile,v 1.43 2012/10/27 20:03:57 bapt Exp $
+#
 
 PORTNAME=	images
 PORTVERSION=	4.0.1
 PORTEPOCH=	2
 CATEGORIES=	graphics
 MASTER_SITES=	https://bitbucket.org/camlspotter/camlimages/get/
+
 PKGNAMEPREFIX=	ocaml-
-DISTNAME=	v${PORTVERSION}
-DIST_SUBDIR=	ocaml-images
 
 DIST_SUBDIR=	ocaml-images
 DISTNAME=	v${PORTVERSION}
@@ -17,77 +21,81 @@ WRKSRC =	${WRKDIR}/camlspotter-camlimages-c803efa9d5d3
 MAINTAINER=	michipili@gmail.com
 COMMENT=	Objective Caml image processing library
 
-BUILD_DEPENDS=	${LOCALBASE}/share/aclocal/ocaml.m4:${PORTSDIR}/lang/ocaml-autoconf
-BUILD_DEPENDS+=	omake:${PORTSDIR}/devel/omake
+NO_STAGE=	yes
 
-USE_OCAML=		yes
+BUILD_DEPENDS=	${LOCALBASE}/share/aclocal/ocaml.m4:${PORTSDIR}/lang/ocaml-autoconf \
+                ${LOCALBASE}/bin/omake:${PORTSDIR}/devel/omake
+
+USE_OCAML=	yes
 USE_OCAML_FINDLIB=	yes
-OCAMLFIND_DESTDIR=	${STAGEDIR}${PREFIX}/${OCAML_SITELIBDIR}
+USE_OCAML_WASH=	yes
+USE_OCAML_LDCONFIG=	yes
 
 OCAML_PKGDIRS=	camlimages
-OCAML_LDLIBS=	${OCAML_SITELIBDIR}/camlimages
+OCAML_LDLIBS=   ${OCAML_SITELIBDIR}/camlimages
 
-OMAKESUBS+=	-e s@%%INCLUDESPORTS%%@${LOCALBASE}/include@
-OMAKESUBS+=	-e s@%%INCLUDESX11%%@${LOCALBASE}/include/X11@
-OMAKESUBS+=	-e s@%%INCLUDESPNG%%@${LOCALBASE}/include/libpng15@
+
+OMAKESUBS+=     -e s@%%INCLUDESPORTS%%@${LOCALBASE}/include@
+OMAKESUBS+=     -e s@%%INCLUDESX11%%@${LOCALBASE}/include/X11@
+OMAKESUBS+=     -e s@%%INCLUDESPNG%%@${LOCALBASE}/include/libpng15@
 OMAKESUBS+=	-e s@%%LDFLAGSPORTS%%@-L${LOCALBASE}/lib@
 
-OMAKE=		omake 'PREFIX=${STAGEDIR}${PREFIX}'
-OMARGS=		--dotomake .omake --force-dotomake
-WRKSRC=		${WRKDIR}/camlspotter-camlimages-c803efa9d5d3
+OMAKE=		omake 'PREFIX=${PREFIX}'
 
-MAKE_JOBS_UNSAFE= yes
+MAKE_JOBS_UNSAFE=	yes
 
-OPTIONS_DEFINE=	PNG JPEG TIFF XPM GIF FREETYPE GHOSTSCRIPT GTK2 DOCS
-OPTIONS_DEFAULT=PNG JPEG TIFF XPM GIF FREETYPE GHOSTSCRIPT
-OPTIONS_SUB=	yes
-
-PNG_CONFIGURE_WITH=	png
-PNG_LIB_DEPENDS=	libpng15.so:${PORTSDIR}/graphics/png
-
-JPEG_CONFIGURE_WITH=	jpeg
-JPEG_LIB_DEPENDS=	libjpeg.so:${PORTSDIR}/graphics/jpeg
-
-TIFF_CONFIGURE_WITH=	tiff
-TIFF_LIB_DEPENDS=	libtiff.so:${PORTSDIR}/graphics/tiff
-
-XPM_CONFIGURE_WITH=	xpm
-
-GIF_CONFIGURE_WITH=	gif
-GIF_LIB_DEPENDS=	libgif.so:${PORTSDIR}/graphics/giflib
-
-FREETYPE_CONFIGURE_WITH=freetype
-FREETYPE_LIB_DEPENDS=	libttf.so:${PORTSDIR}/print/freetype
-
-GHOSTSCRIPT_CONFIGURE_WITH= gs
-
-GTK2_CONFIGURE_WITH=	liblgtk2
-GTK2_BUILD_DEPENDS=	lablgtk2:${PORTSDIR}/x11-toolkits/ocaml-lablgtk2
-GTK2_RUN_DEPENDS=	lablgtk2:${PORTSDIR}/x11-toolkits/ocaml-lablgtk2
+OPTIONS=	PNG "Enable PNG support" on \
+		JPEG "Enable JPEG support" on \
+		TIFF "Enable TIFF support" on \
+		XPM "Enable XPM support" on \
+		GIF "Enable GIF support" on \
+		FREETYPE "Enable text rendering via freetype" on \
+		GS "Enable PostScript support via Ghostscript" on \
+		GTK2 "Enable LablGTK2 support" off
 
 .include <bsd.port.options.mk>
 
-.if ${PORT_OPTIONS:MXPM}
+.if !defined(WITHOUT_PNG)
+LIB_DEPENDS+=	png15:${PORTSDIR}/graphics/png
+.endif
+
+.if !defined(WITHOUT_JPEG)
+LIB_DEPENDS+=	jpeg.11:${PORTSDIR}/graphics/jpeg
+.endif
+
+.if !defined(WITHOUT_TIFF)
+LIB_DEPENDS+=	tiff.4:${PORTSDIR}/graphics/tiff
+.endif
+
+.if !defined(WITHOUT_XPM)
 USE_XORG=	xpm
+.endif
+
+.if !defined(WITHOUT_GIF)
+LIB_DEPENDS+=	gif.5:${PORTSDIR}/graphics/giflib
+.endif
+
+.if !defined(WITHOUT_FREETYPE)
+USE_FREETYPE=	yes
 .endif
 
 .if defined(WITH_GS)
 USE_GHOSTSCRIPT=	yes
 .endif
 
+.if defined(WITH_GTK2)
+BUILD_DEPENDS+=	lablgtk2:${PORTSDIR}/x11-toolkits/ocaml-lablgtk2
+RUN_DEPENDS+=	lablgtk2:${PORTSDIR}/x11-toolkits/ocaml-lablgtk2
+.endif
+
 do-configure:
 	@(cd ${WRKSRC} && ${REINPLACE_CMD} ${OMAKESUBS} OMakefile)
-	(cd ${WRKSRC} && ${OMAKE} ${OMARGS} configure)
+	@(cd ${WRKSRC} && ${OMAKE} configure)
 
 do-build:
-	(cd ${WRKSRC} && ${OMAKE} ${OMARGS})
-
-ocaml-findlib:
-	# Overriding ocaml-findlib target which does not support stage
-	# The consequence is that pkg-plist must be manually supported
+	@(cd ${WRKSRC} && ${OMAKE})
 
 do-install:
-	@${MKDIR} ${STAGEDIR}${PREFIX}/${OCAML_LDLIBS}	
-	(cd ${WRKSRC} && ${OMAKE} ${OMARGS} install)
+	@(cd ${WRKSRC} && ${OMAKE} install)
 
 .include <bsd.port.mk>
