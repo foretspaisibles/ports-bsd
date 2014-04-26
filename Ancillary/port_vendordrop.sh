@@ -1,6 +1,8 @@
 # port_vendordrop
 #  Drop the content of the ports dir into our directory
 
+# Usage: sh Ancillary/port_vendordrop.sh ocaml tuareg-mode.el
+
 port_repository='svn://svn.de.freebsd.org/ports'
 port_branch='head'
 port_dbdir='Library'
@@ -46,13 +48,13 @@ port_vendordrop()
 
     install -d "$1"
 
-    vendordrop=`port_export "$1.new" "$2"`
+    vendordrop=`port_export "$2.new" "$2"`
     status="$?"
 
     if [ $status ]; then
-	mv "$1" "$1.old" \
-	    && mv "$1.new" "$1" \
-	    && rm -r -f "$1.old"
+	mv "$2" "$2.old" \
+	    && mv "$2.new" "$2" \
+	    && rm -r -f "$2.old"
 
 	port_mkportdir "$1"
 
