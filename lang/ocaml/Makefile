@@ -1,8 +1,9 @@
 # Created by: Kiriyama Kazuhiko <kiri@kiri.toba-cmt.ac.jp>
-# $FreeBSD: head/lang/ocaml/Makefile 352274 2014-04-26 17:20:32Z marino $
+# $FreeBSD: head/lang/ocaml/Makefile 352383 2014-04-26 21:39:06Z marino $
 
 PORTNAME=	ocaml
 PORTVERSION=	4.01.0
+PORTREVISION=	1
 CATEGORIES=	lang
 MASTER_SITES=	http://caml.inria.fr/pub/distrib/${DISTNAME:R}/ \
 		${MASTER_SITE_GENTOO}
@@ -178,11 +179,11 @@ check test: install
 	${SETENV} ${MAKE_ENV} ${MAKE_CMD} ${MAKE_ARGS} report
 
 post-install:
-#	@${TOUCH} ${STAGEDIR}${PREFIX}/lib/ocaml/ocamldoc/custom/.keep
+	${RMDIR} ${STAGEDIR}${PREFIX}/lib/ocaml/ocamldoc/custom
 	@${CHMOD} 755 ${STAGEDIR}${PREFIX}/lib/ocaml/expunge
 .if ${PORT_OPTIONS:MTK}
 	@${MKDIR} ${STAGEDIR}${EXAMPLESDIR}
-	@(cd ${WRKSRC}/otherlibs/labltk && \
+	(cd ${WRKSRC}/otherlibs/labltk && \
 		${COPYTREE_SHARE} examples_labltk ${STAGEDIR}${EXAMPLESDIR} \
 		"! -name .ignore" && \
 		${COPYTREE_SHARE} examples_camltk ${STAGEDIR}${EXAMPLESDIR} \
@@ -202,10 +203,10 @@ post-install:
 .if ${PORT_OPTIONS:MOPT_DEF}
 . for module in ${MODOPT}
 #	First, we save bytecode version
-	@${MV} ${STAGEDIR}${PREFIX}/bin/${module} ${STAGEDIR}${PREFIX}/bin/${module}.byte
+	${MV} ${STAGEDIR}${PREFIX}/bin/${module} ${STAGEDIR}${PREFIX}/bin/${module}.byte
 
 #	Next make .opt version be the default one (via link)
-	@${LN} ${STAGEDIR}${PREFIX}/bin/${module}.opt ${STAGEDIR}${PREFIX}/bin/${module}
+	${LN} ${STAGEDIR}${PREFIX}/bin/${module}.opt ${STAGEDIR}${PREFIX}/bin/${module}
 	@${ECHO_CMD} "bin/${module}.byte" >> ${TMPPLIST}
 	@${ECHO_CMD} "@exec ${LN} %D/${module}.opt %D/${module}" >> ${TMPPLIST}
 . endfor
