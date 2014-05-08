@@ -1,9 +1,9 @@
 # Created by: Kiriyama Kazuhiko <kiri@kiri.toba-cmt.ac.jp>
-# $FreeBSD: head/lang/ocaml/Makefile 353142 2014-05-07 08:27:28Z marino $
+# $FreeBSD$
 
 PORTNAME=	ocaml
 PORTVERSION=	4.01.0
-PORTREVISION=	1
+PORTREVISION=	3
 CATEGORIES=	lang
 MASTER_SITES=	http://caml.inria.fr/pub/distrib/${DISTNAME:R}/ \
 		${MASTER_SITE_GENTOO}
@@ -32,16 +32,13 @@ MAKE_JOBS_UNSAFE=	yes
 MAKE_ENV+=	STAGEDIR="${STAGEDIR}"
 CONFIGURE_ARGS=	-verbose -prefix "${PREFIX}" \
 		-cc "${CC} ${CFLAGS}" \
-		-as "${AS} ${ASFLAGS}" \
 		-aspp "${CC} -c" \
 		-partialld "${LD} -r"
 
-OPTIONS_DEFINE= X11 TK THREADS OPT_DEF DOCS
+OPTIONS_DEFINE= X11 TK THREADS DOCS
 OPTIONS_DEFAULT=X11 TK THREADS
-OPT_DEF_DESC=	Use system-optimized binaries by default
 TK_DESC=	LablTk library (requires X11 support)
 CMP_LIB_DESC=	Install compiler libraries
-OPT_DEF_DESC=	Use system-optimizes binaries by default
 PORTDOCS=	htmlman ${DOCSDISTNAME}-refman.ps.gz \
 		${DOCSDISTNAME}-refman.pdf
 
@@ -62,6 +59,12 @@ PLIST_SUB+=	DOC=""
 PORTDOCS=	htmlman ${DOCSDISTNAME}-refman.ps.gz ${DOCSDISTNAME}-refman.pdf
 .else
 PLIST_SUB+=	DOC="@comment "
+.endif
+
+.if ${ARCH} == armv6
+CONFIGURE_ARGS+= -as "${AS} ${ASFLAGS} -mfpu=softvfp -meabi=5" 
+.else
+CONFIGURE_ARGS+= -as "${AS} ${ASFLAGS}" 
 .endif
 
 .if ${PORT_OPTIONS:MTHREADS}
@@ -108,7 +111,7 @@ CONFIGURE_ARGS+=-no-tk
 .include <bsd.port.pre.mk>
 .include "${FILESDIR}/manfiles"
 
-OCAML_ARCH= ${ARCH:S/x86_64/amd64/:S/powerpc/power/}
+OCAML_ARCH= ${ARCH:S/x86_64/amd64/:S/powerpc/power/:S/armv6/arm/}
 
 .if defined(NO_PROFILE) || ${OCAML_ARCH} == power || ${OPSYS} == DragonFly
 PLIST_SUB+=	PROF="@comment "
@@ -198,18 +201,5 @@ post-install:
 
 # Fix permissions for ld.conf
 	@${CHMOD} 644 ${STAGEDIR}${PREFIX}/lib/ocaml/ld.conf
-
-# Do we want .opt version of tools to be the default ?
-.if ${PORT_OPTIONS:MOPT_DEF}
-. for module in ${MODOPT}
-#	First, we save bytecode version
-	${MV} ${STAGEDIR}${PREFIX}/bin/${module} ${STAGEDIR}${PREFIX}/bin/${module}.byte
-
-#	Next make .opt version be the default one (via link)
-	${LN} ${STAGEDIR}${PREFIX}/bin/${module}.opt ${STAGEDIR}${PREFIX}/bin/${module}
-	@${ECHO_CMD} "bin/${module}.byte" >> ${TMPPLIST}
-	@${ECHO_CMD} "@exec ${LN} %D/${module}.opt %D/${module}" >> ${TMPPLIST}
-. endfor
-.endif
 
 .include <bsd.port.post.mk>
