@@ -1,5 +1,5 @@
 # Created by: Kiriyama Kazuhiko <kiri@kiri.toba-cmt.ac.jp>
-# $FreeBSD: head/lang/ocaml/Makefile 352383 2014-04-26 21:39:06Z marino $
+# $FreeBSD: head/lang/ocaml/Makefile 353142 2014-05-07 08:27:28Z marino $
 
 PORTNAME=	ocaml
 PORTVERSION=	4.01.0
@@ -110,7 +110,7 @@ CONFIGURE_ARGS+=-no-tk
 
 OCAML_ARCH= ${ARCH:S/x86_64/amd64/:S/powerpc/power/}
 
-.if ${OCAML_ARCH} == power
+.if defined(NO_PROFILE) || ${OCAML_ARCH} == power || ${OPSYS} == DragonFly
 PLIST_SUB+=	PROF="@comment "
 .else
 PLIST_SUB+=	PROF=""
