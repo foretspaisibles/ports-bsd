@@ -1,5 +1,5 @@
 # Created by: Jaap Boender <jaapb@kerguelen.org>
-# $FreeBSD: head/devel/ocaml-calendar/Makefile 349292 2014-03-26 20:46:03Z antoine $
+# $FreeBSD: head/devel/ocaml-calendar/Makefile 357277 2014-06-10 07:39:01Z olgeni $
 
 PORTNAME=	calendar
 PORTVERSION=	2.03.2
@@ -8,7 +8,7 @@ MASTER_SITES=	http://forge.ocamlcore.org/frs/download.php/915/
 PKGNAMEPREFIX=	ocaml-
 
 MAINTAINER=	jaapb@kerguelen.org
-COMMENT=	A date and time library for OCaml
+COMMENT=	Date and time library for OCaml
 
 GNU_CONFIGURE=	yes
 USES=		gmake

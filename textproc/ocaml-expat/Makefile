@@ -1,5 +1,5 @@
 # Created by: Marwan Burelle <marwan.burelle@lri.fr
-# $FreeBSD: head/textproc/ocaml-expat/Makefile 340722 2014-01-22 17:00:46Z mat $
+# $FreeBSD: head/textproc/ocaml-expat/Makefile 355336 2014-05-26 13:21:43Z miwi $
 
 PORTNAME=	ocaml-expat
 PORTVERSION=	0.9.1
@@ -16,7 +16,7 @@ RUN_DEPENDS=	ocamlc:${PORTSDIR}/lang/ocaml \
 		ocamlfind:${PORTSDIR}/devel/ocaml-findlib
 LIB_DEPENDS=	expat.6:${PORTSDIR}/textproc/expat2
 
-USE_GMAKE=	yes
+USES=		gmake
 MAKE_ARGS=	EXPAT_LIBDIR=${LOCALBASE}/lib \
 		EXPAT_INCDIR=${LOCALBASE}/include \
 		CAML_INCDIR=${LOCALBASE}/lib/ocaml

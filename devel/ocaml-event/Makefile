@@ -1,5 +1,5 @@
 # Created by: Mario Sergio Fujikawa Ferreira <lioux@FreeBSD.org>
-# $FreeBSD: head/devel/ocaml-event/Makefile 340722 2014-01-22 17:00:46Z mat $
+# $FreeBSD: head/devel/ocaml-event/Makefile 357277 2014-06-10 07:39:01Z olgeni $
 
 PORTNAME=	event
 PORTVERSION=	0.6.0
@@ -10,13 +10,13 @@ PKGNAMEPREFIX=	ocaml-
 DISTNAME=	${PKGNAMEPREFIX}${PORTNAME}-${PORTVERSION}
 
 MAINTAINER=	michael.grunewald@laposte.net
-COMMENT=	An ocaml wrapper for the libevent API
+COMMENT=	Ocaml wrapper for the libevent API
 
 BUILD_DEPENDS=	ocamlc:${PORTSDIR}/lang/ocaml
 LIB_DEPENDS=	event-1.4:${PORTSDIR}/devel/libevent
 
 ALL_TARGET=	all allopt
-USE_GMAKE=	yes
+USES=		gmake
 
 .ifndef(NOPORTDOCS)
 ALL_TARGET+=	doc

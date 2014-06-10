@@ -1,6 +1,7 @@
 # Created by: Kiriyama Kazuhiko <kiri@kiri.toba-cmt.ac.jp>
-# $FreeBSD: head/lang/ocaml/Makefile 353142 2014-05-07 08:27:28Z marino $
+# $FreeBSD: head/lang/ocaml/Makefile 356791 2014-06-06 14:37:25Z bapt $
 
+# for committer: bump PORTREVISION for math/facile whenever ocaml gets updated
 PORTNAME=	ocaml
 PORTVERSION=	4.01.0
 PORTREVISION=	1
@@ -19,7 +20,7 @@ LICENSE=		QPL10 LGPL20
 LICENSE_COMB=		multi
 LICENSE_NAME_QPL10=	Q Public License, Version 1.0
 LICENSE_FILE_QPL10=	${WRKSRC}/LICENSE
-LICENSE_PERMS_QPL10=	auto-accept
+LICENSE_PERMS_QPL10=	auto-accept dist-mirror dist-sell pkg-mirror pkg-sell
 
 USES=		gmake tar:bzip2
 REINPLACE_ARGS=	-i ""
