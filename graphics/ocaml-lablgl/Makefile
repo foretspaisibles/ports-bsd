@@ -1,5 +1,5 @@
 # Created by: Ronald Kuehn <rk@ronald.org>
-# $FreeBSD: head/graphics/ocaml-lablgl/Makefile 351411 2014-04-16 18:28:47Z zeising $
+# $FreeBSD: head/graphics/ocaml-lablgl/Makefile 362712 2014-07-23 17:07:12Z bapt $
 
 PORTNAME=	lablgl
 PORTVERSION=	20120306
@@ -9,7 +9,7 @@ MASTER_SITES=	http://wwwfun.kurims.kyoto-u.ac.jp/soft/lsl/dist/ \
 		https://forge.ocamlcore.org/frs/download.php/816/
 PKGNAMEPREFIX=	ocaml-
 
-MAINTAINER=	bf@FreeBSD.org
+MAINTAINER=	ports@FreeBSD.org
 COMMENT=	OpenGL interface for Objective Caml
 
 LICENSE=	BSD3CLAUSE

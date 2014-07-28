@@ -1,5 +1,5 @@
 # Created by: J Koshy <jkoshy@FreeBSD.org>
-# $FreeBSD: head/lang/ocaml-mode.el/Makefile 340722 2014-01-22 17:00:46Z mat $
+# $FreeBSD: head/lang/ocaml-mode.el/Makefile 362717 2014-07-23 17:30:45Z bapt $
 
 PORTNAME=	caml-mode
 PORTVERSION=	3.01
@@ -10,8 +10,8 @@ MASTER_SITES=	http://wwwfun.kurims.kyoto-u.ac.jp/soft/olabl/dist/ \
 MASTER_SITE_SUBDIR=	jkoshy
 DISTNAME=	ocaml-mode-3.01
 
-MAINTAINER=	michael.grunewald@laposte.net
-COMMENT=	An EMACS mode for editing OCaml programs
+MAINTAINER=	ports@FreeBSD.org
+COMMENT=	EMACS mode for editing OCaml programs
 
 BUILD_DEPENDS=	emacs:${PORTSDIR}/editors/emacs
 RUN_DEPENDS=	emacs:${PORTSDIR}/editors/emacs

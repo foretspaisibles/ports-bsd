@@ -1,5 +1,5 @@
 # Created by: ijliao
-# $FreeBSD: head/devel/ocaml-camomile/Makefile 357277 2014-06-10 07:39:01Z olgeni $
+# $FreeBSD: head/devel/ocaml-camomile/Makefile 360604 2014-07-04 12:06:07Z bapt $
 
 PORTNAME=	camomile
 PORTVERSION=	0.8.3
@@ -7,7 +7,7 @@ CATEGORIES=	devel
 MASTER_SITES=	SF
 PKGNAMEPREFIX=	ocaml-
 
-MAINTAINER=	michael.grunewald@laposte.net
+MAINTAINER= ports@FreeBSD.org
 COMMENT=	Comprehensive Unicode library for objective caml language
 
 USES=		gmake tar:bzip2

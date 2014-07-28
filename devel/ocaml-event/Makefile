@@ -1,19 +1,19 @@
 # Created by: Mario Sergio Fujikawa Ferreira <lioux@FreeBSD.org>
-# $FreeBSD: head/devel/ocaml-event/Makefile 357277 2014-06-10 07:39:01Z olgeni $
+# $FreeBSD: head/devel/ocaml-event/Makefile 362796 2014-07-24 13:32:58Z bapt $
 
 PORTNAME=	event
 PORTVERSION=	0.6.0
-PORTREVISION=	2
+PORTREVISION=	3
 CATEGORIES=	devel
 MASTER_SITES=	http://www.xs4all.nl/~mmzeeman/ocaml/
 PKGNAMEPREFIX=	ocaml-
 DISTNAME=	${PKGNAMEPREFIX}${PORTNAME}-${PORTVERSION}
 
-MAINTAINER=	michael.grunewald@laposte.net
+MAINTAINER= ports@FreeBSD.org
 COMMENT=	Ocaml wrapper for the libevent API
 
 BUILD_DEPENDS=	ocamlc:${PORTSDIR}/lang/ocaml
-LIB_DEPENDS=	event-1.4:${PORTSDIR}/devel/libevent
+LIB_DEPENDS=	libevent.so:${PORTSDIR}/devel/libevent2
 
 ALL_TARGET=	all allopt
 USES=		gmake
@@ -64,7 +64,7 @@ post-configure:
 
 pre-build:
 .for file in liboevent.cmi
-	@cd ${WRKSRC} && ${GMAKE} ${file}
+	@cd ${WRKSRC} && ${MAKE_CMD} ${file}
 .endfor
 
 do-install:

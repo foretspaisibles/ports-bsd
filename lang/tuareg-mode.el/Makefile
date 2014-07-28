@@ -1,5 +1,5 @@
 # Created by: dd
-# $FreeBSD: head/lang/tuareg-mode.el/Makefile 340722 2014-01-22 17:00:46Z mat $
+# $FreeBSD: head/lang/tuareg-mode.el/Makefile 362717 2014-07-23 17:30:45Z bapt $
 
 PORTNAME=	tuareg-mode
 PORTVERSION=	2.0.6
@@ -7,7 +7,7 @@ PORTEPOCH=	1
 CATEGORIES=	lang elisp
 MASTER_SITES=	http://forge.ocamlcore.org/frs/download.php/882/
 
-MAINTAINER=	michael.grunewald@laposte.net
+MAINTAINER=	ports@FreeBSD.org
 COMMENT=	Emacs major mode for editing Caml code
 
 USE_EMACS=	yes

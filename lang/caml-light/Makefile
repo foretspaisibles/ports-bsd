@@ -1,5 +1,5 @@
 # Created by: jkoshy
-# $FreeBSD: head/lang/caml-light/Makefile 340722 2014-01-22 17:00:46Z mat $
+# $FreeBSD: head/lang/caml-light/Makefile 360810 2014-07-05 19:27:03Z olgeni $
 
 PORTNAME=	caml
 PORTVERSION=	0.75
@@ -11,7 +11,7 @@ MASTER_SITES=	http://caml.inria.fr/pub/distrib/caml-light-0.75/ \
 DISTNAME=	cl75unix
 
 MAINTAINER=	michael.grunewald@laposte.net
-COMMENT=	A strongly typed functional language belonging to the ML family
+COMMENT=	Strongly typed functional language belonging to the ML family
 
 USE_XORG=	x11
 WRKSRC=		${WRKDIR}/cl75
