@@ -1,8 +1,9 @@
 # Created by: Klaus T. Aehlig <aehlig@linta.de>
-# $FreeBSD: head/math/ocamlgsl/Makefile 362023 2014-07-16 03:00:46Z adamw $
+# $FreeBSD: head/math/ocamlgsl/Makefile 367213 2014-09-03 15:36:42Z antoine $
 
 PORTNAME=	ocaml-gsl
 PORTVERSION=	1.15.1
+PORTREVISION=	1
 CATEGORIES=	math
 MASTER_SITES=	http://bitbucket.org/mmottl/gsl-ocaml/downloads/
 DISTNAME=	gsl-ocaml-${PORTVERSION}
@@ -21,6 +22,7 @@ USES=			gmake
 USE_OCAML=		YES
 USE_OCAML_FINDLIB=	YES
 USE_OCAML_LDCONFIG=	YES
+OCAML_PKGDIRS=		gsl
 HAS_CONFIGURE=		YES
 MAKE_JOBS_UNSAFE=	yes
 WRKSRC=			${WRKDIR}/gsl-ocaml-${PORTVERSION}

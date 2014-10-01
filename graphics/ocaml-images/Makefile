@@ -1,8 +1,9 @@
 # Created by: ijliao
-# $FreeBSD: head/graphics/ocaml-images/Makefile 349275 2014-03-26 17:54:08Z marino $
+# $FreeBSD: head/graphics/ocaml-images/Makefile 368571 2014-09-19 15:45:14Z tijl $
 
 PORTNAME=	images
 PORTVERSION=	4.0.1
+PORTREVISION=	1
 PORTEPOCH=	2
 CATEGORIES=	graphics
 MASTER_SITES=	https://bitbucket.org/camlspotter/camlimages/get/

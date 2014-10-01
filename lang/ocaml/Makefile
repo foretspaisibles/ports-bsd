@@ -1,10 +1,10 @@
 # Created by: Kiriyama Kazuhiko <kiri@kiri.toba-cmt.ac.jp>
-# $FreeBSD: head/lang/ocaml/Makefile 361989 2014-07-15 17:52:17Z adamw $
+# $FreeBSD: head/lang/ocaml/Makefile 365614 2014-08-22 07:20:30Z antoine $
 
 # for committer: bump PORTREVISION for math/facile whenever ocaml gets updated
 PORTNAME=	ocaml
 PORTVERSION=	4.01.0
-PORTREVISION=	3
+PORTREVISION=	4
 CATEGORIES=	lang
 MASTER_SITES=	http://caml.inria.fr/pub/distrib/${DISTNAME:R}/ \
 		${MASTER_SITE_GENTOO}
@@ -20,7 +20,7 @@ LICENSE=		QPL10 LGPL20
 LICENSE_COMB=		multi
 LICENSE_NAME_QPL10=	Q Public License, Version 1.0
 LICENSE_FILE_QPL10=	${WRKSRC}/LICENSE
-LICENSE_PERMS_QPL10=	auto-accept dist-mirror dist-sell pkg-mirror pkg-sell
+LICENSE_PERMS_QPL10=	dist-mirror dist-sell pkg-mirror pkg-sell auto-accept
 
 USES=		gmake tar:bzip2
 REINPLACE_ARGS=	-i ""
@@ -126,9 +126,6 @@ BROKEN=	ocamlc.opt seg-faults on ${ARCH}, please try to fix
 .endif
 
 post-extract:
-.if ${OCAML_ARCH} == power
-	${MV} ${WRKSRC}/asmrun/power-elf.S ${WRKSRC}/asmrun/power-bsd.S
-.endif
 .if ${PORT_OPTIONS:MDOCS}
 	@if ! (cd ${WRKDIR} && \
 	  ${TAR} xf ${_DISTDIR}${DOCSDISTNAME}-refman-html.tar.gz \

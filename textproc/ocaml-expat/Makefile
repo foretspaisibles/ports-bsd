@@ -1,5 +1,5 @@
 # Created by: Marwan Burelle <marwan.burelle@lri.fr
-# $FreeBSD: head/textproc/ocaml-expat/Makefile 361528 2014-07-11 12:55:44Z vanilla $
+# $FreeBSD: head/textproc/ocaml-expat/Makefile 363904 2014-08-03 14:15:08Z olgeni $
 
 PORTNAME=	expat
 PORTVERSION=	0.9.1
@@ -10,7 +10,7 @@ PKGNAMEPREFIX=	ocaml-
 DISTNAME=	${PKGNAMEPREFIX}${PORTNAME}-${PORTVERSION}
 
 MAINTAINER=	ports@FreeBSD.org
-COMMENT=	A stub for the expat parser in OCaml
+COMMENT=	Stub for the expat parser in OCaml
 
 LIB_DEPENDS=	libexpat.so:${PORTSDIR}/textproc/expat2
 
