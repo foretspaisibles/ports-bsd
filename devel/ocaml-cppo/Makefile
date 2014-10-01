@@ -1,5 +1,5 @@
 # Created by: Michael Grunewald
-# $FreeBSD: head/devel/ocaml-cppo/Makefile 327724 2013-09-20 17:13:42Z bapt $
+# $FreeBSD: head/devel/ocaml-cppo/Makefile 361465 2014-07-10 15:46:06Z vanilla $
 
 PORTNAME=	cppo
 PORTVERSION=	0.9.2
@@ -7,15 +7,11 @@ CATEGORIES=	devel
 MASTER_SITES=	http://martin.jambon.free.fr/
 PKGNAMEPREFIX=	ocaml-
 
-MAINTAINER=	michael.grunewald@laposte.net
-COMMENT=	A simple preprocessor for OCaml
+MAINTAINER=	ports@FreeBSD.org
+COMMENT=	Simple preprocessor for OCaml
 
-USE_GMAKE=	yes
+USES=		gmake
 USE_OCAML=	yes
 MAKE_JOBS_UNSAFE=	yes
 
-DOCSDIR=	${PREFIX}/share/doc/ocaml/${PORTNAME}
-EXAMPLESDIR=	${PREFIX}/share/examples/ocaml/${PORTNAME}
-
-NO_STAGE=	yes
 .include <bsd.port.mk>

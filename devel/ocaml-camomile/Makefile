@@ -1,5 +1,5 @@
-# Created by: ijliao
-# $FreeBSD: head/devel/ocaml-camomile/Makefile 340722 2014-01-22 17:00:46Z mat $
+# Created by: Ying-Chieh Liao <ijliao@FreeBSD.org>
+# $FreeBSD: head/devel/ocaml-camomile/Makefile 364953 2014-08-15 09:43:02Z danfe $
 
 PORTNAME=	camomile
 PORTVERSION=	0.8.3
@@ -7,11 +7,12 @@ CATEGORIES=	devel
 MASTER_SITES=	SF
 PKGNAMEPREFIX=	ocaml-
 
-MAINTAINER=	michael.grunewald@laposte.net
-COMMENT=	A comprehensive Unicode library for objective caml language
+MAINTAINER=	ports@FreeBSD.org
+COMMENT=	Comprehensive Unicode library for Objective Caml
 
-USE_BZIP2=	yes
-USE_GMAKE=	yes
+LICENSE=	LGPL21
+
+USES=		gmake tar:bzip2
 USE_OCAML=	yes
 USE_OCAML_FINDLIB=yes
 USE_OCAML_LDCONFIG=yes
@@ -22,15 +23,15 @@ MAKE_JOBS_UNSAFE=	yes
 DOCSDIR=	${PREFIX}/share/doc/ocaml/${PORTNAME}
 EXAMPLESDIR=	${PREFIX}/share/examples/ocaml/${PORTNAME}
 
-NO_STAGE=	yes
 post-install:
-	@${FIND} ${DATADIR} ! -type d | \
-		${SED} 's,^${PREFIX}/,,' >> ${TMPPLIST}
-	@${FIND} ${DATADIR} -type d | ${SORT} -r | \
-		${SED} 's,^${PREFIX}/,@dirrm ,' >> ${TMPPLIST}
-	@${FIND} ${OCAMLFIND_DESTDIR}/${PORTNAME} ! -type d | \
-		${SED} 's,^${PREFIX}/,,' >> ${TMPPLIST}
-	@${FIND} ${OCAMLFIND_DESTDIR}/${PORTNAME} -type d | ${SORT} -r | \
-		${SED} 's,^${PREFIX}/,@dirrm ,' >> ${TMPPLIST}
+	@${FIND} ${STAGEDIR}${DATADIR} ! -type d | \
+		${SED} 's,^${STAGEDIR}${PREFIX}/,,' >> ${TMPPLIST}
+	@${FIND} ${STAGEDIR}${DATADIR} -type d | ${SORT} -r | \
+		${SED} 's,^${STAGEDIR}${PREFIX}/,@dirrm ,' >> ${TMPPLIST}
+	@${FIND} ${STAGEDIR}${OCAMLFIND_DESTDIR}/${PORTNAME} ! -type d | \
+		${SED} 's,^${STAGEDIR}${PREFIX}/,,' >> ${TMPPLIST}
+	@${FIND} ${STAGEDIR}${OCAMLFIND_DESTDIR}/${PORTNAME} -type d | \
+		${SORT} -r | ${SED} 's,^${STAGEDIR}${PREFIX}/,@dirrm ,' \
+			>> ${TMPPLIST}
 
 .include <bsd.port.mk>

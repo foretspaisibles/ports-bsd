@@ -5,11 +5,8 @@ ocaml-calendar|devel/ocaml-calendar
 ocaml-camomile|devel/ocaml-camomile
 ocaml-cppo|devel/ocaml-cppo
 ocaml-cryptokit|security/ocaml-cryptokit
-ocaml-event|devel/ocaml-event
 ocaml-expat|textproc/ocaml-expat
 ocaml-images|graphics/ocaml-images
-ocaml-mode.el|lang/ocaml-mode.el
 ocaml-net|www/ocaml-net
 ocaml-nox11|lang/ocaml-nox11
-caml-light|lang/caml-light
-omake|devel/omake
+ocaml-lablgl|graphics/ocaml-lablgl
