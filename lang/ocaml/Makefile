@@ -125,12 +125,6 @@ post-patch:
 		-e 's|-lbfd -ldl|-lbfd $$dllib|' \
 		${WRKSRC}/configure
 # don't hardcode gcc for depend target
-# be aware of staging
-	@${REINPLACE_CMD} -E \
-		-e 's|gcc|$$(CC)|' \
-		-e '/^install/,/^$$/s@\$$\(((INSTALL_)?(BIN|LIB|STUBLIB|COMPLIB|MANO?|INSTALL|INSTALL_CUSTOM)DIR)\)@$$(STAGEDIR)$$(\1)@g' \
-		`find ${WRKSRC} -name 'Makefile*'`
-	@${REINPLACE_CMD} -E -e 's/^DIR=/DIR=$$(STAGEDIR)/' ${WRKSRC}/man/Makefile
 
 post-configure:
 # CFLAGS safeness
