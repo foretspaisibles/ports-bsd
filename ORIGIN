@@ -10,3 +10,4 @@ ocaml-images|graphics/ocaml-images
 ocaml-net|www/ocaml-net
 ocaml-nox11|lang/ocaml-nox11
 ocaml-lablgl|graphics/ocaml-lablgl
+ocaml-equeue|devel/ocaml-equeue
