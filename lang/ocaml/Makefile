@@ -36,9 +36,8 @@ CONFIGURE_ARGS=	-verbose -prefix "${PREFIX}" \
 		-aspp "${CC} -c" \
 		-partialld "${LD} -r"
 
-OPTIONS_DEFINE= X11 TK THREADS DOCS EXAMPLES
-OPTIONS_DEFAULT=X11 TK THREADS
-TK_DESC=	LablTk library (requires X11 support)
+OPTIONS_DEFINE= X11 THREADS DOCS EXAMPLES
+OPTIONS_DEFAULT=X11 THREADS
 CMP_LIB_DESC=	Install compiler libraries
 PORTDOCS=	htmlman ${DOCSDISTNAME}-refman.ps.gz \
 		${DOCSDISTNAME}-refman.pdf
@@ -91,24 +90,6 @@ CONFLICTS+=	ocaml-[0-9]*
 CONFIGURE_ARGS+=-no-graph
 .endif
 
-.if ${PORT_OPTIONS:MTK}
-. if ${PORT_OPTIONS:MEXAMPLES}
-PORTEXAMPLES=	examples_camltk examples_labltk
-.endif
-. if ! ${PORT_OPTIONS:MX11}
-IGNORE=requires X11 support to build TK bindings
-. endif
-USES+=		tk:84+
-PLIST_SUB+=	TK=""
-CONFIGURE_ARGS+=	-tkdefs \
-			"-I${TCL_INCLUDEDIR} -I${TK_INCLUDEDIR} ${THR_CPP}" \
-			-tklibs "-L${LOCALBASE}/lib -ltk${TK_VER:S|.||} \
-			-ltcl${TCL_VER:S|.||} ${THR_LD}"
-.else
-PLIST_SUB+=	TK="@comment "
-CONFIGURE_ARGS+=-no-tk
-.endif
-
 .include <bsd.port.pre.mk>
 .include "${FILESDIR}/manfiles"
 
@@ -150,10 +131,6 @@ post-patch:
 		-e '/^install/,/^$$/s@\$$\(((INSTALL_)?(BIN|LIB|STUBLIB|COMPLIB|MANO?|INSTALL|INSTALL_CUSTOM)DIR)\)@$$(STAGEDIR)$$(\1)@g' \
 		`find ${WRKSRC} -name 'Makefile*'`
 	@${REINPLACE_CMD} -E -e 's/^DIR=/DIR=$$(STAGEDIR)/' ${WRKSRC}/man/Makefile
-.if ${PORT_OPTIONS:MTK}
-	@${REINPLACE_CMD} -e 's|/usr/bin/wish|${WISH}|' \
-		${WRKSRC}/otherlibs/labltk/examples_labltk/hello.tcl
-.endif
 
 post-configure:
 # CFLAGS safeness
@@ -182,14 +159,6 @@ check test: install
 post-install:
 	${RMDIR} ${STAGEDIR}${PREFIX}/lib/ocaml/ocamldoc/custom
 	@${CHMOD} 755 ${STAGEDIR}${PREFIX}/lib/ocaml/expunge
-.if ${PORT_OPTIONS:MTK}
-	@${MKDIR} ${STAGEDIR}${EXAMPLESDIR}
-	(cd ${WRKSRC}/otherlibs/labltk && \
-		${COPYTREE_SHARE} examples_labltk ${STAGEDIR}${EXAMPLESDIR} \
-		"! -name .ignore" && \
-		${COPYTREE_SHARE} examples_camltk ${STAGEDIR}${EXAMPLESDIR} \
-		"! -name .ignore")
-.endif
 .if ${PORT_OPTIONS:MDOCS}
 	${MKDIR} ${STAGEDIR}${DOCSDIR}
 	(cd ${WRKDIR} && ${COPYTREE_SHARE} htmlman ${STAGEDIR}${DOCSDIR})
