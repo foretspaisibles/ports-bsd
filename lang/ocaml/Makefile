@@ -151,8 +151,6 @@ check test: install
 	${SETENV} ${MAKE_ENV} ${MAKE_CMD} ${MAKE_ARGS} report
 
 post-install:
-	${RMDIR} ${STAGEDIR}${PREFIX}/lib/ocaml/ocamldoc/custom
-	@${CHMOD} 755 ${STAGEDIR}${PREFIX}/lib/ocaml/expunge
 .if ${PORT_OPTIONS:MDOCS}
 	${MKDIR} ${STAGEDIR}${DOCSDIR}
 	(cd ${WRKDIR} && ${COPYTREE_SHARE} htmlman ${STAGEDIR}${DOCSDIR})
