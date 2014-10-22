@@ -3,8 +3,7 @@
 
 # for committer: bump PORTREVISION for math/facile whenever ocaml gets updated
 PORTNAME=	ocaml
-PORTVERSION=	4.01.0
-PORTREVISION=	4
+PORTVERSION=	4.02.1
 CATEGORIES=	lang
 MASTER_SITES=	http://caml.inria.fr/pub/distrib/${DISTNAME:R}/ \
 		${MASTER_SITE_GENTOO}
@@ -22,7 +21,7 @@ LICENSE_NAME_QPL10=	Q Public License, Version 1.0
 LICENSE_FILE_QPL10=	${WRKSRC}/LICENSE
 LICENSE_PERMS_QPL10=	dist-mirror dist-sell pkg-mirror pkg-sell auto-accept
 
-USES=		gmake tar:bzip2
+USES=		gmake tar:xz
 REINPLACE_ARGS=	-i ""
 HAS_CONFIGURE=	yes
 ALL_TARGET=	world.opt
