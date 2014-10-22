@@ -4,7 +4,7 @@
 PORTNAME=	ocaml-nox11
 CATEGORIES=	lang
 
-MAINTAINER=	michael.grunewald@laposte.net
+MAINTAINER=	michipili@gmail.com
 COMMENT=	Objective Caml compiler and programming environment (no X11)
 
 MASTERDIR=	${.CURDIR}/../ocaml
