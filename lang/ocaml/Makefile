@@ -1,5 +1,5 @@
 # Created by: Kiriyama Kazuhiko <kiri@kiri.toba-cmt.ac.jp>
-# $FreeBSD: head/lang/ocaml/Makefile 365614 2014-08-22 07:20:30Z antoine $
+# $FreeBSD: head/lang/ocaml/Makefile 371260 2014-10-20 11:32:00Z marino $
 
 # for committer: bump PORTREVISION for math/facile whenever ocaml gets updated
 PORTNAME=	ocaml
@@ -115,7 +115,7 @@ CONFIGURE_ARGS+=-no-tk
 
 OCAML_ARCH= ${ARCH:S/x86_64/amd64/:S/powerpc/power/:S/armv6/arm/}
 
-.if defined(NO_PROFILE) || ${OCAML_ARCH} == power || ${OPSYS} == DragonFly
+.if defined(NO_PROFILE) || ${OCAML_ARCH} == power
 PLIST_SUB+=	PROF="@comment "
 .else
 PLIST_SUB+=	PROF=""

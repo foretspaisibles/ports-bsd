@@ -1,5 +1,5 @@
 # Created by: Ying-Chieh Liao <ijliao@FreeBSD.org>
-# $FreeBSD: head/devel/ocaml-camomile/Makefile 364953 2014-08-15 09:43:02Z danfe $
+# $FreeBSD: head/devel/ocaml-camomile/Makefile 373656 2014-11-29 23:56:21Z antoine $
 
 PORTNAME=	camomile
 PORTVERSION=	0.8.3
@@ -26,12 +26,7 @@ EXAMPLESDIR=	${PREFIX}/share/examples/ocaml/${PORTNAME}
 post-install:
 	@${FIND} ${STAGEDIR}${DATADIR} ! -type d | \
 		${SED} 's,^${STAGEDIR}${PREFIX}/,,' >> ${TMPPLIST}
-	@${FIND} ${STAGEDIR}${DATADIR} -type d | ${SORT} -r | \
-		${SED} 's,^${STAGEDIR}${PREFIX}/,@dirrm ,' >> ${TMPPLIST}
 	@${FIND} ${STAGEDIR}${OCAMLFIND_DESTDIR}/${PORTNAME} ! -type d | \
 		${SED} 's,^${STAGEDIR}${PREFIX}/,,' >> ${TMPPLIST}
-	@${FIND} ${STAGEDIR}${OCAMLFIND_DESTDIR}/${PORTNAME} -type d | \
-		${SORT} -r | ${SED} 's,^${STAGEDIR}${PREFIX}/,@dirrm ,' \
-			>> ${TMPPLIST}
 
 .include <bsd.port.mk>
