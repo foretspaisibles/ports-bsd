@@ -223,6 +223,3 @@ lib/ocaml/labltk/winfo.mli
 lib/ocaml/labltk/wm.cmi
 lib/ocaml/labltk/wm.mli
 lib/ocaml/stublibs/dlllabltk.so
-@dir lib/ocaml/labltk
-@dir lib/ocaml/stublibs
-@dir lib/ocaml
