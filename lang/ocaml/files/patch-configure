@@ -1,0 +1,10 @@
+--- configure.orig	2014-12-06 11:33:20.000000000 +0000
++++ configure	2014-12-06 11:33:37.000000000 +0000
+@@ -1560,6 +1560,7 @@
+       else
+         x11_libs="-L$dir"
+         case "$target" in
++          *-*-freebsd*) x11_link="-L$dir -lX11";;
+           *-kfreebsd*-gnu) x11_link="-L$dir -lX11";;
+           *-*-*bsd*) x11_link="-R$dir -L$dir -lX11";;
+           *) x11_link="-L$dir -lX11";;
