@@ -1,0 +1,18 @@
+--- configure
++++ configure
+@@ -222,6 +222,7 @@ if test $has_tk = true && test -z "$tk_libs"; then
+   esac
+   if test -n "$tklibdir"; then
+     case "$system" in
++    freebsd) tk_libs="-L$tklibdir" ;;
+     *bsd*) tk_libs="-R$tklibdir -L$tklibdir" ;;
+     *) tk_libs="-L$tklibdir" ;;
+     esac
+@@ -266,6 +267,7 @@ if test $has_tk = true; then
+       then
+         has_tk=true
+         case "$system" in
++        freebsd) tk_libs="-L$tklibdir $tk_libs";;
+         *bsd*) tk_libs="-R$tklibdir -L$tklibdir $tk_libs";;
+         *) tk_libs="-L$tklibdir $tk_libs";;
+         esac
