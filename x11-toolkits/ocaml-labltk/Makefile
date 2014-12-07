@@ -4,7 +4,7 @@
 PORTNAME=	labltk
 PORTVERSION=	8.06.0
 CATEGORIES=	x11-toolkits
-MASTER_SITES=	https://forge.ocamlcore.org/frs/download.php/1455/
+MASTER_SITES=	http://forge.ocamlcore.org/frs/download.php/1455/
 PKGNAMEPREFIX=	ocaml-
 
 MAINTAINER=	michipili@gmail.com
