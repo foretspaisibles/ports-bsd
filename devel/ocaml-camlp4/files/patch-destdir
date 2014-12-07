@@ -1,0 +1,35 @@
+diff --git a/Makefile b/Makefile
+index c8bd7a4..1210145 100644
+--- Makefile.orig
++++ Makefile
+@@ -19,12 +21,12 @@ all: byte native
+ 
+ .PHONY: install
+ install:
+-	./build/install.sh
++	env LIBDIR=$(LIBDIR) BINDIR=$(BINDIR) DESTDIR=$(DESTDIR) ./build/install.sh
+ 
+ .PHONY: install-META
+ install-META: camlp4/META
+-	mkdir -p ${PKGDIR}/camlp4/
+-	cp -f camlp4/META ${PKGDIR}/camlp4/
++	mkdir -p ${DESTDIR}${PKGDIR}/camlp4/
++	cp -f camlp4/META ${DESTDIR}${PKGDIR}/camlp4/
+ 
+ camlp4/META: camlp4/META.in
+ 	sed -e s/@@VERSION@@/${version}/g $? > $@
+diff --git a/build/install.sh b/build/install.sh
+index 9d98d6c..220e878 100755
+--- build/install.sh.orig
++++ build/install.sh
+@@ -26,8 +26,8 @@ SAVED_LIBDIR="${LIBDIR}"
+ 
+ . ./config.sh
+ 
+-BINDIR="${SAVED_BINDIR:-${BINDIR}}"
+-LIBDIR="${SAVED_LIBDIR:-${LIBDIR}}"
++BINDIR="${DESTDIR}${SAVED_BINDIR:-${BINDIR}}"
++LIBDIR="${DESTDIR}${SAVED_LIBDIR:-${LIBDIR}}"
+ 
+ not_installed=$PWD/_build/not_installed
+ 
