@@ -13,6 +13,7 @@ COMMENT=	Objective Caml interface to Tk
 LICENSE=	LGPL20
 
 USES=		gmake
+USE_OCAML=      yes
 HAS_CONFIGURE=	yes
 MAKE_ENV+=	STAGEDIR="${STAGEDIR}"
 
